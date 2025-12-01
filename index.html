@@ -994,6 +994,8 @@ button:hover {
 <img src="HATS/122.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/122.PNG')">
 <img src="HATS/123.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/123.PNG')">
 <img src="HATS/124.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/124.PNG')">
+<img src="HATS/125.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/125.PNG')">
+
 
 
 
@@ -1222,7 +1224,7 @@ function randomizeCharacter() {
   const mouthIndex = getRandomIndex(108);
   selectTrait('mouth', getImagePath('MOUTH', mouthIndex));
 
-  const clothingIndex = getRandomIndex(140);
+  const clothingIndex = getRandomIndex(141);
   selectTrait('clothing', getImagePath('CLOTHING', clothingIndex));
 
   // ---- HAIR / HAT ---- //
@@ -1231,7 +1233,7 @@ function randomizeCharacter() {
     selectTrait('hat', '');
   } else {
     // You list up to 124 hats in the picker; safe upper bound:
-    selectTrait('hat', getImagePath('HATS', getRandomIndex(124)));
+    selectTrait('hat', getImagePath('HATS', getRandomIndex(125)));
     selectTrait('hair', '');
   }
 
