@@ -350,6 +350,8 @@ button:hover {
                 <img src="BACKGROUNDS/99.PNG" alt="Grey" onclick="selectTrait('background', 'BACKGROUNDS/99.PNG')">
                 <img src="BACKGROUNDS/100.PNG" alt="Grey" onclick="selectTrait('background', 'BACKGROUNDS/100.PNG')">
                 <img src="BACKGROUNDS/101.PNG" alt="Grey" onclick="selectTrait('background', 'BACKGROUNDS/101.PNG')">
+                <img src="BACKGROUNDS/102.PNG" alt="Grey" onclick="selectTrait('background', 'BACKGROUNDS/102.PNG')">
+
 
 
 
@@ -803,6 +805,8 @@ button:hover {
 <img src="CLOTHING/138.PNG" alt="CLOTHING" onclick="selectTrait('clothing', 'CLOTHING/138.PNG')">
 <img src="CLOTHING/139.PNG" alt="CLOTHING" onclick="selectTrait('clothing', 'CLOTHING/139.PNG')">
 <img src="CLOTHING/140.PNG" alt="CLOTHING" onclick="selectTrait('clothing', 'CLOTHING/140.PNG')">
+<img src="CLOTHING/141.PNG" alt="CLOTHING" onclick="selectTrait('clothing', 'CLOTHING/141.PNG')">
+
 
 
 
@@ -989,6 +993,8 @@ button:hover {
 <img src="HATS/121.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/121.PNG')">
 <img src="HATS/122.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/122.PNG')">
 <img src="HATS/123.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/123.PNG')">
+<img src="HATS/124.PNG" alt="HATS" onclick="selectTrait('hat', 'HATS/124.PNG')">
+
 
 
 
@@ -1010,6 +1016,8 @@ button:hover {
 <img src="GOO/4.PNG" alt="GOO" onclick="selectTrait('goo', 'GOO/4.PNG')">
 <img src="GOO/5.PNG" alt="GOO" onclick="selectTrait('goo', 'GOO/5.PNG')">
 <img src="GOO/6.PNG" alt="GOO" onclick="selectTrait('goo', 'GOO/6.PNG')">
+<img src="GOO/7.PNG" alt="GOO" onclick="selectTrait('goo', 'GOO/7.PNG')">
+
 
 
 
@@ -1155,6 +1163,8 @@ button:hover {
 <img src="HANDITEM2/17.PNG" alt="HANDITEM" onclick="selectTrait('ball', 'HANDITEM2/17.PNG')">
 <img src="HANDITEM2/18.PNG" alt="HANDITEM" onclick="selectTrait('ball', 'HANDITEM2/18.PNG')">
 <img src="HANDITEM2/19.PNG" alt="HANDITEM" onclick="selectTrait('ball', 'HANDITEM2/19.PNG')">
+<img src="HANDITEM2/20.PNG" alt="HANDITEM" onclick="selectTrait('ball', 'HANDITEM2/20.PNG')">
+
 
 
 
@@ -1196,7 +1206,7 @@ function getImagePath(folder, index) {
 
 function randomizeCharacter() {
   // ---- BASE TRAITS ---- //
-  const backgroundIndex = getRandomIndex(101);
+  const backgroundIndex = getRandomIndex(102);
   selectTrait('background', getImagePath('BACKGROUNDS', backgroundIndex));
 
   // FIXED: folder name must match your thumbnails (no space)
@@ -1220,15 +1230,15 @@ function randomizeCharacter() {
     selectTrait('hair', getImagePath('HAIR', getRandomIndex(82)));
     selectTrait('hat', '');
   } else {
-    // You list up to 122 hats in the picker; safe upper bound:
-    selectTrait('hat', getImagePath('HATS', getRandomIndex(123)));
+    // You list up to 124 hats in the picker; safe upper bound:
+    selectTrait('hat', getImagePath('HATS', getRandomIndex(124)));
     selectTrait('hair', '');
   }
 
   // ---- OPTIONAL TRAITS ---- //
   selectTrait('accessories', Math.random() < 0.5 ? getImagePath('GLASSES', getRandomIndex(24)) : '');
   selectTrait('behindback', Math.random() < 0.5 ? getImagePath('BEHINDBACK', getRandomIndex(4)) : '');
-  selectTrait('goo', Math.random() < 0.5 ? getImagePath('GOO', getRandomIndex(6)) : '');
+  selectTrait('goo', Math.random() < 0.5 ? getImagePath('GOO', getRandomIndex(7)) : '');
 
   // ---- CLEAR HANDS ---- //
   selectTrait('hand', '');
