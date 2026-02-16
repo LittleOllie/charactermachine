@@ -433,6 +433,71 @@ button:hover {
 .load-modal.show {
     display: flex;
 }
+.preloader {
+    position: fixed;
+    inset: 0;
+    background: rgba(102, 166, 255, 0.95);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    color: #fff;
+}
+.preloader.hidden {
+    display: none;
+}
+.preloader-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.preloader h3 {
+    margin: 0;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+.preloader-logo {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    animation: spinAround 3s linear infinite;
+    pointer-events: none;
+}
+@keyframes spinAround {
+    0% {
+        transform: rotate(0deg) translateX(120px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(120px) rotate(-360deg);
+    }
+}
+.preloader-progress {
+    width: 300px;
+    max-width: 80%;
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+.preloader-bar {
+    height: 100%;
+    background: linear-gradient(to right, #89f7fe, #66a6ff);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 15px;
+}
+.preloader-text {
+    font-size: 14px;
+    opacity: 0.9;
+}
 .load-modal-dialog {
     background: #fff;
     padding: 20px 24px;
@@ -1562,6 +1627,18 @@ button:hover {
     </div>
   </div>
 </div>
+
+<div id="preloader" class="preloader">
+  <div class="preloader-header">
+    <img src="LO.png" alt="LO" class="preloader-logo">
+    <h3>LOADING CHARACTER CREATOR...</h3>
+  </div>
+  <div class="preloader-progress">
+    <div id="preloaderBar" class="preloader-bar"></div>
+  </div>
+  <div id="preloaderText" class="preloader-text">PREPARING TRAITS...</div>
+</div>
+
 <script>
 /* =========================
    TRAIT SELECTOR + RANDOMIZER
@@ -2013,35 +2090,36 @@ function randomizeCharacter() {
       if (ballTrait) selectTrait('ball', ballTrait.image);
     }
   }
-  // Hand 2 + Ball 2: Match skin index like Hand 1 (HANDS2/3.PNG for skin 3, etc.)
+  // Hand 2 + Ball 2: ONLY match skin index (no fallback) - must have exact match
   if (handCombo === 1 && skinIndex && skinTrait) {
-    // Build hand2 pool - use selected first, then all, ensure we have something
+    // Build hand2 pool - use selected first, then all, ensure we get something
     var hand2Pool = hand2List.length > 0 ? hand2List : allHands2;
     if (hand2Pool.length === 0) {
       // Last resort: get ALL hand2 traits from TRAIT_DATA
       var allHand2Raw = TRAIT_DATA.hand2 || [];
-      hand2Pool = allHand2Raw.filter(function (t) { return t && t.image && !isBlankHand(t.image); });
+      hand2Pool = allHand2Raw.filter(function (t) { 
+        return t && t.image && !isBlankHand(t.image); 
+      });
     }
-    if (hand2Pool.length > 0) {
-      // Try to find hand2 trait matching skin index (same as Hand 1 logic)
+    // ONLY pick hand2 trait that matches skin index exactly (no fallback)
+    if (hand2Pool && hand2Pool.length > 0) {
       var hand2Trait = hand2Pool.find(function (t) {
         if (!t || !t.image) return false;
         var n = (t.image.match(/(\d+)/) || [])[1];
         return n && parseInt(n, 10) === skinIndex;
       });
-      // If no exact match, use any hand2 trait as fallback
-      if (!hand2Trait) {
-        hand2Trait = pickRandomFrom(hand2Pool);
-      }
+      // Only proceed if we found an exact match
       if (hand2Trait && hand2Trait.image) {
         selectTrait('hand2', hand2Trait.image);
         // Get ball2 pool
         var ball2Pool = ball2List.length ? ball2List : allBalls2;
         if (ball2Pool.length === 0) {
           var allBall2Raw = TRAIT_DATA.ball2 || [];
-          ball2Pool = allBall2Raw.filter(function (t) { return t && t.image && !isBlankHand(t.image); });
+          ball2Pool = allBall2Raw.filter(function (t) { 
+            return t && t.image && !isBlankHand(t.image); 
+          });
         }
-        if (ball2Pool.length > 0) {
+        if (ball2Pool && ball2Pool.length > 0) {
           var ball2Trait = pickRandomFrom(ball2Pool);
           if (ball2Trait && ball2Trait.image) {
             selectTrait('ball2', ball2Trait.image);
@@ -2270,14 +2348,88 @@ document.getElementById('saveCharacterBtn').addEventListener('click', saveCharac
 document.getElementById('loadCharacterBtn').addEventListener('click', loadCharacterFromStorage);
 document.getElementById('newCharacterBtn').addEventListener('click', newCharacter);
 
+function preloadAllImages() {
+  var preloader = document.getElementById('preloader');
+  var preloaderBar = document.getElementById('preloaderBar');
+  var preloaderText = document.getElementById('preloaderText');
+  if (!preloader || !preloaderBar || !preloaderText) return;
+  
+  // Collect all unique image paths from TRAIT_DATA
+  var allImages = new Set();
+  Object.keys(TRAIT_DATA).forEach(function (slot) {
+    var list = TRAIT_DATA[slot];
+    if (!list) return;
+    list.forEach(function (t) {
+      if (t && t.image) allImages.add(t.image);
+    });
+  });
+  
+  var imageArray = Array.from(allImages);
+  var total = imageArray.length;
+  var loaded = 0;
+  var failed = 0;
+  
+  if (total === 0) {
+    preloader.classList.add('hidden');
+    return;
+  }
+  
+  preloaderText.textContent = 'LOADING ' + total + ' TRAITS...';
+  
+  function updateProgress() {
+    var percent = Math.floor(((loaded + failed) / total) * 100);
+    preloaderBar.style.width = percent + '%';
+    preloaderText.textContent = 'LOADING ' + (loaded + failed) + ' / ' + total + ' TRAITS...';
+    
+    if (loaded + failed >= total) {
+      setTimeout(function () {
+        preloader.classList.add('hidden');
+      }, 300);
+    }
+  }
+  
+  // Preload images in batches to avoid overwhelming the browser
+  var batchSize = 10;
+  var currentBatch = 0;
+  
+  function loadBatch() {
+    var start = currentBatch * batchSize;
+    var end = Math.min(start + batchSize, total);
+    
+    for (var i = start; i < end; i++) {
+      var img = new Image();
+      img.onload = function () {
+        loaded++;
+        updateProgress();
+      };
+      img.onerror = function () {
+        failed++;
+        updateProgress();
+      };
+      img.src = imageArray[i];
+    }
+    
+    currentBatch++;
+    if (end < total) {
+      setTimeout(loadBatch, 50); // Small delay between batches
+    }
+  }
+  
+  loadBatch();
+}
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function () {
     initTraitCulling();
     initCharacterCanvasClicks();
+    // Start preloading after traits are initialized
+    setTimeout(preloadAllImages, 100);
   });
 } else {
   initTraitCulling();
   initCharacterCanvasClicks();
+  // Start preloading after traits are initialized
+  setTimeout(preloadAllImages, 100);
 }
 
 /* =========================
