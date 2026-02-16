@@ -88,7 +88,7 @@ body {
 #traitSelection {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, auto) auto;
+    grid-template-rows: repeat(4, auto) auto auto;
     gap: 4px 6px;
     justify-items: stretch;
     align-content: start;
@@ -114,6 +114,55 @@ body {
 .category-button:hover {
     opacity: 0.9;
 }
+/* Pair colors - matching colors for related traits */
+.category-button.pair-skin {
+    background-color: #e74c3c;
+}
+.category-button.pair-skin:hover {
+    background-color: #c0392b;
+}
+.category-button.pair-clothing {
+    background-color: #27ae60;
+}
+.category-button.pair-clothing:hover {
+    background-color: #229954;
+}
+.category-button.pair-background {
+    background-color: #34495e;
+}
+.category-button.pair-background:hover {
+    background-color: #2c3e50;
+}
+.category-button.pair-eyes {
+    background-color: #00bcd4;
+}
+.category-button.pair-eyes:hover {
+    background-color: #00acc1;
+}
+.category-button.pair-behind {
+    background-color: #e91e63;
+}
+.category-button.pair-behind:hover {
+    background-color: #c2185b;
+}
+.category-button.pair-hair {
+    background-color: #f39c12;
+}
+.category-button.pair-hair:hover {
+    background-color: #e67e22;
+}
+.category-button.pair-hand1 {
+    background-color: #9b59b6;
+}
+.category-button.pair-hand1:hover {
+    background-color: #8e44ad;
+}
+.category-button.pair-hand2 {
+    background-color: #1abc9c;
+}
+.category-button.pair-hand2:hover {
+    background-color: #16a085;
+}
 .category-button.active-tab {
     background-color: #ffd93d;
     color: #333;
@@ -123,20 +172,22 @@ body {
     opacity: 0.95;
 }
 #randomButton.randomize-button {
-    grid-row: 5;
+    grid-row: 6;
     grid-column: 1 / -1;
-    background-color: #f39c12;
+    background-color: #d35400;
     color: #fff;
     padding: 6px 12px;
     font-size: 12px;
     font-weight: 700;
 }
 #randomButton.randomize-button:hover {
-    background-color: #e67e22;
+    background-color: #a04000;
     opacity: 1;
 }
 #exportTraitListBtn.export-trait-button {
-    background-color: #f39c12;
+    grid-row: 5;
+    grid-column: 1 / -1;
+    background-color: #2c3e50;
     color: #fff;
     padding: 6px 12px;
     font-size: 12px;
@@ -144,7 +195,7 @@ body {
     margin: 0;
 }
 #exportTraitListBtn.export-trait-button:hover {
-    background-color: #e67e22;
+    background-color: #1a252f;
     opacity: 1;
 }
 
@@ -653,21 +704,22 @@ button:hover {
 <div id="mainContent">
     <div id="topRow">
         <div id="traitSelection">
-            <button class="category-button" data-category-id="backgroundCategory" data-label="BACKGROUNDS" onclick="showCategory('backgroundCategory')">BACKGROUNDS (0)</button>
-            <button class="category-button" data-category-id="clothingCategory" data-label="CLOTHING" onclick="showCategory('clothingCategory')">CLOTHING (0)</button>
-            <button class="category-button" data-category-id="handCategory" data-label="HAND 1" onclick="showCategory('handCategory')">HAND 1 (0)</button>
-            <button class="category-button" data-category-id="backgroundblurCategory" data-label="BG BLUR" onclick="showCategory('backgroundblurCategory')">BG BLUR (0)</button>
-            <button class="category-button" data-category-id="skinCategory" data-label="SKIN" onclick="showCategory('skinCategory')">SKIN (0)</button>
-            <button class="category-button" data-category-id="hatCategory" data-label="HEADWEAR" onclick="showCategory('hatCategory')">HEADWEAR (0)</button>
-            <button class="category-button" data-category-id="ballCategory" data-label="BALLS 1" onclick="showCategory('ballCategory')">BALLS 1 (0)</button>
-            <button class="category-button" data-category-id="behindbackCategory" data-label="BEHIND BACK" onclick="showCategory('behindbackCategory')">BEHIND BACK (0)</button>
-            <button class="category-button" data-category-id="mouthCategory" data-label="MOUTH" onclick="showCategory('mouthCategory')">MOUTH (0)</button>
-            <button class="category-button" data-category-id="hairCategory" data-label="HAIR" onclick="showCategory('hairCategory')">HAIR (0)</button>
-            <button class="category-button" data-category-id="hand2Category" data-label="HAND 2" onclick="showCategory('hand2Category')">HAND 2 (0)</button>
-            <button class="category-button" data-category-id="gooCategory" data-label="ABOVE HEAD" onclick="showCategory('gooCategory')">ABOVE HEAD (0)</button>
-            <button class="category-button" data-category-id="eyesCategory" data-label="EYES" onclick="showCategory('eyesCategory')">EYES (0)</button>
-            <button class="category-button" data-category-id="accessoriesCategory" data-label="GLASSES" onclick="showCategory('accessoriesCategory')">GLASSES (0)</button>
-            <button class="category-button" data-category-id="ball2Category" data-label="BALLS 2" onclick="showCategory('ball2Category')">BALLS 2 (0)</button>
+            <button class="category-button pair-background" data-category-id="backgroundCategory" data-label="BACKGROUNDS" onclick="showCategory('backgroundCategory')">BACKGROUNDS (0)</button>
+            <button class="category-button pair-background" data-category-id="backgroundblurCategory" data-label="BG BLUR" onclick="showCategory('backgroundblurCategory')">BG BLUR (0)</button>
+            <button class="category-button pair-skin" data-category-id="skinCategory" data-label="SKIN" onclick="showCategory('skinCategory')">SKIN (0)</button>
+            <button class="category-button pair-skin" data-category-id="mouthCategory" data-label="MOUTH" onclick="showCategory('mouthCategory')">MOUTH (0)</button>
+            <button class="category-button pair-clothing" data-category-id="clothingCategory" data-label="CLOTHING" onclick="showCategory('clothingCategory')">CLOTHING (0)</button>
+            <button class="category-button pair-clothing" data-category-id="hoodiesCategory" data-label="HOODIES" onclick="showCategory('hoodiesCategory')">HOODIES (0)</button>
+            <button class="category-button pair-eyes" data-category-id="eyesCategory" data-label="EYES" onclick="showCategory('eyesCategory')">EYES (0)</button>
+            <button class="category-button pair-eyes" data-category-id="accessoriesCategory" data-label="GLASSES" onclick="showCategory('accessoriesCategory')">GLASSES (0)</button>
+            <button class="category-button pair-hair" data-category-id="hairCategory" data-label="HAIR" onclick="showCategory('hairCategory')">HAIR (0)</button>
+            <button class="category-button pair-hair" data-category-id="hatCategory" data-label="HEADWEAR" onclick="showCategory('hatCategory')">HEADWEAR (0)</button>
+            <button class="category-button pair-behind" data-category-id="behindbackCategory" data-label="BEHIND BACK" onclick="showCategory('behindbackCategory')">BEHIND BACK (0)</button>
+            <button class="category-button pair-behind" data-category-id="gooCategory" data-label="ABOVE HEAD" onclick="showCategory('gooCategory')">ABOVE HEAD (0)</button>
+            <button class="category-button pair-hand1" data-category-id="handCategory" data-label="HAND 1" onclick="showCategory('handCategory')">HAND 1 (0)</button>
+            <button class="category-button pair-hand1" data-category-id="ballCategory" data-label="BALLS 1" onclick="showCategory('ballCategory')">BALLS 1 (0)</button>
+            <button class="category-button pair-hand2" data-category-id="hand2Category" data-label="HAND 2" onclick="showCategory('hand2Category')">HAND 2 (0)</button>
+            <button class="category-button pair-hand2" data-category-id="ball2Category" data-label="BALLS 2" onclick="showCategory('ball2Category')">BALLS 2 (0)</button>
             <button id="exportTraitListBtn" class="export-trait-button">EXPORT TRAIT LIST</button>
             <button id="randomButton" class="category-button randomize-button" onclick="randomizeCharacter()">RANDOMIZE</button>
         </div>
@@ -690,6 +742,7 @@ button:hover {
             <img id="hair" alt="">
 	    <img id="accessories" alt="">
             <img id="hat" alt="">
+            <img id="hoodies" alt="">
             <img id="goo" alt="">
             <img id="ball" alt="">
             <img id="hand" alt="">
@@ -1474,6 +1527,24 @@ button:hover {
 
 </div>
         </div>
+        <div class="trait-category" id="hoodiesCategory">
+            <div class="trait-options">
+<img src="HOODIES/1.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/1.PNG')">
+<img src="HOODIES/2.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/2.PNG')">
+<img src="HOODIES/3.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/3.PNG')">
+<img src="HOODIES/4.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/4.PNG')">
+<img src="HOODIES/5.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/5.PNG')">
+<img src="HOODIES/6.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/6.PNG')">
+<img src="HOODIES/7.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/7.PNG')">
+<img src="HOODIES/8.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/8.PNG')">
+<img src="HOODIES/9.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/9.PNG')">
+<img src="HOODIES/10.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/10.PNG')">
+<img src="HOODIES/11.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/11.PNG')">
+<img src="HOODIES/12.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/12.PNG')">
+<img src="HOODIES/13.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/13.PNG')">
+<img src="HOODIES/14.PNG" alt="HOODIES" onclick="selectTrait('hoodies', 'HOODIES/14.PNG')">
+            </div>
+        </div>
         <div class="trait-category" id="gooCategory">
             <div class="trait-options">
 <img src="GOO/AAA.PNG" alt="GOO" onclick="selectTrait('goo', 'GOO/AA.PNG')">
@@ -1708,6 +1779,7 @@ var categoryIdToSlot = {
   accessoriesCategory: 'accessories',
   behindbackCategory: 'behindback',
   hatCategory: 'hat',
+  hoodiesCategory: 'hoodies',
   gooCategory: 'goo',
   handCategory: 'hand',
   hand2Category: 'hand2',
@@ -1726,6 +1798,7 @@ var categoryDisplayNames = {
   accessoriesCategory: 'Sunglasses',
   behindbackCategory: 'Behind Back',
   hatCategory: 'Headwear',
+  hoodiesCategory: 'Hoodies',
   gooCategory: 'Above Head',
   handCategory: 'Hand Gestures 1',
   hand2Category: 'Hand Gestures 2',
@@ -1744,6 +1817,7 @@ var slotToDisplayName = {
   hair: 'Hairstyles',
   accessories: 'Sunglasses',
   hat: 'Headwear',
+  hoodies: 'Hoodies',
   goo: 'Above Head',
   ball: 'Balls 1',
   hand: 'Hand Gestures 1',
@@ -1812,7 +1886,7 @@ function getTraitPathFromDisplayImg(img) {
   }
 }
 
-var displaySlotOrder = ['background', 'backgroundblur', 'behindback', 'skin', 'eyes', 'clothing', 'mouth', 'hair', 'accessories', 'hat', 'goo', 'ball', 'hand', 'ball2', 'hand2'];
+var displaySlotOrder = ['background', 'backgroundblur', 'behindback', 'skin', 'eyes', 'clothing', 'mouth', 'hair', 'accessories', 'hat', 'hoodies', 'goo', 'ball', 'hand', 'ball2', 'hand2'];
 
 function updateOnCharacterList() {
   var container = document.getElementById('onCharacterListItems');
@@ -2080,6 +2154,8 @@ function randomizeCharacter() {
   selectTrait('accessories', (Math.random() < 0.5 && accList.length) ? pickRandomFrom(accList).image : '');
   var behindList = getSelectedTraits('behindback');
   selectTrait('behindback', (Math.random() < 0.5 && behindList.length) ? pickRandomFrom(behindList).image : '');
+  var hoodiesList = getSelectedTraits('hoodies');
+  selectTrait('hoodies', (Math.random() < 0.5 && hoodiesList.length) ? pickRandomFrom(hoodiesList).image : '');
   var gooList = getSelectedTraits('goo');
   selectTrait('goo', (Math.random() < 0.5 && gooList.length) ? pickRandomFrom(gooList).image : '');
 
@@ -2174,7 +2250,7 @@ function randomizeCharacter() {
 }
 
 function exportTraitList() {
-  var slotOrder = ['background', 'backgroundblur', 'skin', 'eyes', 'mouth', 'hair', 'clothing', 'accessories', 'behindback', 'hat', 'goo', 'hand', 'hand2', 'ball', 'ball2'];
+  var slotOrder = ['background', 'backgroundblur', 'skin', 'eyes', 'mouth', 'hair', 'clothing', 'accessories', 'behindback', 'hat', 'hoodies', 'goo', 'hand', 'hand2', 'ball', 'ball2'];
   var dateStr = new Date().toLocaleDateString(undefined, { dateStyle: 'medium' });
   
   // Collect all selected traits by category
@@ -2431,68 +2507,74 @@ function preloadAllImages() {
   var preloaderText = document.getElementById('preloaderText');
   if (!preloader || !preloaderBar || !preloaderText) return;
   
-  // Collect all unique image paths from TRAIT_DATA
-  var allImages = new Set();
-  Object.keys(TRAIT_DATA).forEach(function (slot) {
-    var list = TRAIT_DATA[slot];
-    if (!list) return;
-    list.forEach(function (t) {
-      if (t && t.image) allImages.add(t.image);
+  // Wait a bit to ensure TRAIT_DATA is populated
+  setTimeout(function() {
+    // Collect all unique image paths from TRAIT_DATA
+    var allImages = new Set();
+    Object.keys(TRAIT_DATA).forEach(function (slot) {
+      var list = TRAIT_DATA[slot];
+      if (!list) return;
+      list.forEach(function (t) {
+        if (t && t.image) allImages.add(t.image);
+      });
     });
-  });
-  
-  var imageArray = Array.from(allImages);
-  var total = imageArray.length;
-  var loaded = 0;
-  var failed = 0;
-  
-  if (total === 0) {
-    preloader.classList.add('hidden');
-    return;
-  }
-  
-  preloaderText.textContent = 'LOADING ' + total + ' TRAITS...';
-  
-  function updateProgress() {
-    var percent = Math.floor(((loaded + failed) / total) * 100);
-    preloaderBar.style.width = percent + '%';
-    preloaderText.textContent = 'LOADING ' + (loaded + failed) + ' / ' + total + ' TRAITS...';
     
-    if (loaded + failed >= total) {
-      setTimeout(function () {
+    var imageArray = Array.from(allImages);
+    var total = imageArray.length;
+    var loaded = 0;
+    var failed = 0;
+    
+    if (total === 0) {
+      // If no images found, hide preloader after a short delay
+      setTimeout(function() {
         preloader.classList.add('hidden');
-      }, 300);
-    }
-  }
-  
-  // Preload images in batches to avoid overwhelming the browser
-  var batchSize = 10;
-  var currentBatch = 0;
-  
-  function loadBatch() {
-    var start = currentBatch * batchSize;
-    var end = Math.min(start + batchSize, total);
-    
-    for (var i = start; i < end; i++) {
-      var img = new Image();
-      img.onload = function () {
-        loaded++;
-        updateProgress();
-      };
-      img.onerror = function () {
-        failed++;
-        updateProgress();
-      };
-      img.src = imageArray[i];
+      }, 500);
+      return;
     }
     
-    currentBatch++;
-    if (end < total) {
-      setTimeout(loadBatch, 50); // Small delay between batches
+    preloaderText.textContent = 'LOADING ' + total + ' TRAITS...';
+    
+    function updateProgress() {
+      var percent = Math.floor(((loaded + failed) / total) * 100);
+      preloaderBar.style.width = percent + '%';
+      preloaderText.textContent = 'LOADING ' + (loaded + failed) + ' / ' + total + ' TRAITS...';
+      
+      if (loaded + failed >= total) {
+        setTimeout(function () {
+          preloader.classList.add('hidden');
+        }, 300);
+      }
     }
-  }
-  
-  loadBatch();
+    
+    // Preload images in batches to avoid overwhelming the browser
+    var batchSize = 10;
+    var currentBatch = 0;
+    
+    function loadBatch() {
+      var start = currentBatch * batchSize;
+      var end = Math.min(start + batchSize, total);
+      
+      for (var i = start; i < end; i++) {
+        var img = new Image();
+        img.onload = function () {
+          loaded++;
+          updateProgress();
+        };
+        img.onerror = function () {
+          failed++;
+          updateProgress();
+        };
+        img.src = imageArray[i];
+      }
+      
+      currentBatch++;
+      if (end < total) {
+        setTimeout(loadBatch, 50); // Small delay between batches
+      }
+    }
+    
+    loadBatch();
+  }, 300); // Wait 300ms for TRAIT_DATA to be populated
 }
 
 if (document.readyState === 'loading') {
