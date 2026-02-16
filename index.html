@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Character Creator</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+<title>Little Ollie Character Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
 
+:root {
+    --lo-blue: #66a6ff;
+    --lo-cyan: #89f7fe;
+    --lo-orange: #f39c12;
+}
+
 body {
-    font-family: 'Fredoka One', cursive, sans-serif;
-    background-image: linear-gradient(to right, #89f7fe, #66a6ff);
+    font-family: 'Fredoka One', cursive;
+    background-image: linear-gradient(to right, var(--lo-cyan), var(--lo-blue));
     color: #333;
     margin: 0;
     padding: 0;
@@ -16,68 +22,230 @@ body {
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    text-transform: uppercase;
 }
 
+#pageHeader {
+    text-align: center;
+    padding: 6px 20px 8px;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 #headerImage {
-    margin-top: 0px;
+    height: 150px;
     width: auto;
-    height: 250px;
+    object-fit: contain;
+}
+#headerLOImage {
+    height: 150px;
+    width: auto;
+    object-fit: contain;
+}
+#pageHeader .tagline {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.25rem;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+    width: 100%;
+    flex-basis: 100%;
 }
 #mainContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    max-width: 1200px;
+    margin-top: 0;
+    padding-top: 0;
+}
+#creatorRow {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    width: 75%;
-    margin-top: 0px;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+#topRow {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1120px;
+    margin-bottom: 4px;
     flex-wrap: wrap;
 }
 #traitSelection {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, auto);
-    gap: 0px;
-    justify-items: center;
-    padding: 0px;
+    grid-template-rows: repeat(4, auto) auto;
+    gap: 4px 6px;
+    justify-items: stretch;
+    align-content: start;
+    padding: 6px 10px;
     background: linear-gradient(to bottom, #89f7fe, #66a6ff);
-    border-radius: 60px;
+    border-radius: 16px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    width: 80%;
-    margin-bottom: 10px;
+    width: min(90vw, 700px);
+    min-width: 200px;
+    box-sizing: border-box;
 }
 .category-button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 23px;
-    border-radius: 30px;
+    margin: 0;
+    padding: 5px 8px;
+    font-size: 11px;
+    border-radius: 10px;
     color: white;
     border: none;
     cursor: pointer;
+    background-color: #3498db;
+    white-space: nowrap;
 }
 .category-button:hover {
-    opacity: 0.8;
+    opacity: 0.9;
 }
-.category-button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 23px;
-    border-radius: 30px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    background-color: #3498db; /* set one color for all */
+.category-button.active-tab {
+    background-color: #ffd93d;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
-.category-button:hover {
-    opacity: 0.8;
+.category-button.active-tab:hover {
+    opacity: 0.95;
+}
+#randomButton.randomize-button {
+    grid-row: 5;
+    grid-column: 1 / -1;
+    background-color: #f39c12;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+#randomButton.randomize-button:hover {
+    background-color: #e67e22;
+    opacity: 1;
+}
+#exportTraitListBtn.export-trait-button {
+    background-color: #f39c12;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0;
+}
+#exportTraitListBtn.export-trait-button:hover {
+    background-color: #e67e22;
+    opacity: 1;
 }
 
 #characterDisplayContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 20px;
-    order: 2;
+    margin: 0;
+    flex: 0 0 auto;
+}
+.underCharacterRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: min(90vw, 700px);
+    margin-top: 4px;
+}
+.character-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.character-actions button {
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 20px;
+}
+#onCharacterList {
+    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 11px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#onCharacterList h4 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    font-weight: 800;
+    color: #333;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+#onCharacterListItems {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 4px 8px;
+    min-width: 0;
+}
+#onCharacterList li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-align: center;
+    min-width: 0;
+    overflow: hidden;
+}
+#onCharacterList li:hover {
+    background: rgba(102, 166, 255, 0.25);
+}
+#onCharacterList li .trait-name {
+    font-weight: 700;
+    color: #333;
+    font-size: 10px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+#onCharacterList li .trait-value {
+    color: #555;
+    font-size: 9px;
+    margin-top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 }
 /* create a predictable square that scales */
 #characterDisplay {
@@ -89,6 +257,8 @@ body {
   background:#fff;
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   margin-bottom: 20px;
+  border-radius: 24px;
+  overflow: hidden;
 }
 
 /* layered images fill the square without distortion */
@@ -99,6 +269,13 @@ body {
   height: 100%;
   object-fit: contain;   /* prevents stretching on iPhone */
 }
+.trait-thumb-wrap.highlight-trait {
+  animation: highlightPulse 1s ease-in-out;
+}
+@keyframes highlightPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.6); }
+}
 
 #traitPictures {
     display: flex;
@@ -107,17 +284,18 @@ body {
     align-items: center;
     width: 400px;
     height: 700px;
+    min-width: 400px;
     background: linear-gradient(to bottom, #89f7fe, #66a6ff);
     padding: 0px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-left: 20px;
-    order: 3;
+    margin: 0;
     overflow-y: auto;
 }
 .trait-category {
     display: none;
     width: 100%;
+    flex-direction: column;
 }
 .trait-category.active {
     display: flex;
@@ -131,6 +309,35 @@ body {
     padding: 10px;
     border-radius: 8px;
 }
+.trait-thumb-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    flex-shrink: 0;
+}
+.trait-thumb-wrap img {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: block;
+}
+.trait-thumb-wrap img:hover {
+    border: 2px solid #666;
+}
+.trait-thumb-wrap .trait-checkbox {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+    accent-color: #3498db;
+}
 .trait-options img {
     margin: 5px;
     width: 80px;
@@ -140,6 +347,60 @@ body {
 }
 .trait-options img:hover {
     border: 2px solid #666;
+}
+/* Trait culling: inactive traits show red X overlay (thumbnail stays full color) */
+.trait-thumb-wrap:has(img.trait-deselected)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: 2px;
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    /* X centered at 50%: two diagonals through the middle */
+    background: linear-gradient(135deg, transparent 45%, #c00 47%, #c00 53%, transparent 55%),
+                linear-gradient(45deg, transparent 45%, #c00 47%, #c00 53%, transparent 55%);
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1;
+}
+.category-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    margin: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.3);
+    border-radius: 8px 8px 0 0;
+}
+.category-header .category-title {
+    font-size: 16px;
+    margin: 0;
+    flex: 1 1 auto;
+}
+.category-header .category-count {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-right: 4px;
+}
+.category-header .select-all-btns {
+    display: flex;
+    gap: 6px;
+}
+.category-header .select-all-btns button {
+    margin: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.category-header .select-all-btns button:hover {
+    background-color: #2980b9;
 }
 button {
     margin: 10px;
@@ -154,24 +415,92 @@ button {
 button:hover {
     background-color: #e67e22;
 }
+.category-header .category-title {
+    font-weight: 700;
+}
 #saveButton {
     margin-top: 20px;
+}
+.load-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+.load-modal.show {
+    display: flex;
+}
+.load-modal-dialog {
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    min-width: 280px;
+    font-family: 'Fredoka One', cursive;
+}
+.load-modal-dialog h4 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: #333;
+}
+.load-modal-dialog select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+.load-modal-dialog .modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.load-modal-dialog .modal-buttons button {
+    padding: 8px 16px;
+    font-size: 14px;
+    margin: 0;
+}
+@media (max-width: 900px) {
+    #creatorRow {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    #traitPictures {
+        width: 100%;
+        min-width: 0;
+        max-width: 400px;
+    }
+    #topRow {
+        flex-direction: column;
+        align-items: center;
+    }
+    #onCharacterList {
+        width: 100%;
+        min-width: 0;
+        max-width: 400px;
+    }
 }
 @media (max-width: 768px) {
     #mainContent {
         flex-direction: column;
         align-items: center;
     }
+    #creatorRow {
+        flex-direction: column;
+        align-items: center;
+    }
     #traitPictures {
         width: 90%;
-        margin-left: 0;
         margin-top: 20px;
-        order: 2;
     }
     #characterDisplayContainer {
         margin: 0;
         width: 90%;
-        order: 1;
     }
     #characterDisplay {
         width: 100%;
@@ -180,8 +509,8 @@ button:hover {
 }
 @media (max-width: 480px) {
     .category-button {
-        font-size: 18px;
-        padding: 8px 16px;
+        font-size: 11px;
+        padding: 4px 8px;
     }
     #characterDisplay {
         width: 300px;
@@ -192,35 +521,72 @@ button:hover {
         height: auto;
         margin-left: 0;
     }
+    #headerImage, #headerLOImage {
+        height: 120px;
+    }
+    #pageHeader {
+        flex-wrap: wrap;
+    }
+    #pageHeader .tagline {
+        font-size: 1rem;
+        width: 100%;
+    }
+}
+@media print {
+    body {
+        font-family: 'Fredoka One', cursive;
+        background: #fff;
+    }
+    #pageHeader {
+        padding: 0 0 12px;
+        margin-bottom: 12px;
+        border-bottom: 3px solid #66a6ff;
+    }
+    #headerImage {
+        height: 120px;
+    }
+    #topRow, #traitSelection, .character-actions, .category-header .select-all-btns {
+        display: none !important;
+    }
 }
 
 </style>
 </head>
 <body>
-<img id="headerImage" src="HEADER/1.PNG" alt="CREATE YOUR OWN LITTLE OLLIE">
+<header id="pageHeader">
+    <img id="headerImage" src="websitelogo3.png" alt="Little Ollie">
+    <img id="headerLOImage" src="LO.png" alt="LO">
+    <p class="tagline">Character Creator</p>
+</header>
 
 <div id="mainContent">
-    <div id="traitSelection">
-        <button class="category-button background-button" onclick="showCategory('backgroundCategory')">BACKGROUNDS</button>
-        <button class="category-button clothing-button" onclick="showCategory('clothingCategory')">CLOTHING</button>
-        <button class="category-button hand-button" onclick="showCategory('handCategory')">HAND GESTURES 1</button>
-        <button class="category-button backgroundblur-button" onclick="showCategory('backgroundblurCategory')">BACKGROUND BLUR</button>
-        <button class="category-button skin-button" onclick="showCategory('skinCategory')">SKIN TONE</button>
-        <button class="category-button hat-button" onclick="showCategory('hatCategory')">HEADWEAR</button>
-        <button class="category-button ball-button" onclick="showCategory('ballCategory')">BALLS 1</button>
-        <button class="category-button behindback-button" onclick="showCategory('behindbackCategory')">BEHIND BACK</button>
-        <button class="category-button mouth-button" onclick="showCategory('mouthCategory')">MOUTH</button>
-        <button class="category-button hair-button" onclick="showCategory('hairCategory')">HAIRSTYLES</button>
-        <button class="category-button hair-button" onclick="showCategory('hand2Category')">HAND GESTURES 2</button>
-        <button class="category-button goo" onclick="showCategory('gooCategory')">ABOVE HEAD</button>
-        <button class="category-button eyes-button" onclick="showCategory('eyesCategory')">EYES</button>
-        <button class="category-button accessories-button" onclick="showCategory('accessoriesCategory')">SUNGLASSES</button>
-        <button class="category-button hat-button" onclick="showCategory('ball2Category')">BALLS 2</button>
-
+    <div id="topRow">
+        <div id="traitSelection">
+            <button class="category-button" data-category-id="backgroundCategory" data-label="BACKGROUNDS" onclick="showCategory('backgroundCategory')">BACKGROUNDS (0)</button>
+            <button class="category-button" data-category-id="clothingCategory" data-label="CLOTHING" onclick="showCategory('clothingCategory')">CLOTHING (0)</button>
+            <button class="category-button" data-category-id="handCategory" data-label="HAND 1" onclick="showCategory('handCategory')">HAND 1 (0)</button>
+            <button class="category-button" data-category-id="backgroundblurCategory" data-label="BG BLUR" onclick="showCategory('backgroundblurCategory')">BG BLUR (0)</button>
+            <button class="category-button" data-category-id="skinCategory" data-label="SKIN" onclick="showCategory('skinCategory')">SKIN (0)</button>
+            <button class="category-button" data-category-id="hatCategory" data-label="HEADWEAR" onclick="showCategory('hatCategory')">HEADWEAR (0)</button>
+            <button class="category-button" data-category-id="ballCategory" data-label="BALLS 1" onclick="showCategory('ballCategory')">BALLS 1 (0)</button>
+            <button class="category-button" data-category-id="behindbackCategory" data-label="BEHIND BACK" onclick="showCategory('behindbackCategory')">BEHIND BACK (0)</button>
+            <button class="category-button" data-category-id="mouthCategory" data-label="MOUTH" onclick="showCategory('mouthCategory')">MOUTH (0)</button>
+            <button class="category-button" data-category-id="hairCategory" data-label="HAIR" onclick="showCategory('hairCategory')">HAIR (0)</button>
+            <button class="category-button" data-category-id="hand2Category" data-label="HAND 2" onclick="showCategory('hand2Category')">HAND 2 (0)</button>
+            <button class="category-button" data-category-id="gooCategory" data-label="ABOVE HEAD" onclick="showCategory('gooCategory')">ABOVE HEAD (0)</button>
+            <button class="category-button" data-category-id="eyesCategory" data-label="EYES" onclick="showCategory('eyesCategory')">EYES (0)</button>
+            <button class="category-button" data-category-id="accessoriesCategory" data-label="GLASSES" onclick="showCategory('accessoriesCategory')">GLASSES (0)</button>
+            <button class="category-button" data-category-id="ball2Category" data-label="BALLS 2" onclick="showCategory('ball2Category')">BALLS 2 (0)</button>
+            <button id="exportTraitListBtn" class="export-trait-button">EXPORT TRAIT LIST</button>
+            <button id="randomButton" class="category-button randomize-button" onclick="randomizeCharacter()">RANDOMIZE</button>
+        </div>
+        <div id="onCharacterList">
+            <h4>WHAT&rsquo;S ON THIS CHARACTER</h4>
+            <ul id="onCharacterListItems"></ul>
+        </div>
     </div>
 
-
-
+    <div id="creatorRow">
     <div id="characterDisplayContainer">
         <div id="characterDisplay">
             <img id="background" alt="">
@@ -239,11 +605,13 @@ button:hover {
             <img id="ball2" alt="">
             <img id="hand2" alt="">
         </div>
-        <button id="randomButton" onclick="randomizeCharacter()">Randomize</button>
-        <button id="downloadColor">Download PNG (Color)</button>
-        <button id="downloadBW">Download PNG (B&W Coloring)</button>
-
-
+        <div class="underCharacterRow">
+            <div class="character-actions">
+                <button id="saveCharacterBtn">SAVE</button>
+                <button id="loadCharacterBtn">LOAD</button>
+                <button id="newCharacterBtn">NEW</button>
+            </div>
+        </div>
     </div>
 
     <div id="traitPictures">
@@ -1076,46 +1444,46 @@ button:hover {
         </div>
         <div class="trait-category" id="hand2Category"> 
             <div class="trait-options">
-<img src="HANDS2/AAA.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS/AA.PNG')">
-<img src="HANDS2/1.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/1.PNG')">
-<img src="HANDS2/2.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/2.PNG')">
-<img src="HANDS2/3.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/3.PNG')">
-<img src="HANDS2/4.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/4.PNG')">
-<img src="HANDS2/5.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/5.PNG')">
-<img src="HANDS2/6.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/6.PNG')">
-<img src="HANDS2/7.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/7.PNG')">
-<img src="HANDS2/8.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/8.PNG')">
-<img src="HANDS2/9.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/9.PNG')">
-<img src="HANDS2/10.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/10.PNG')">
-<img src="HANDS2/11.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/11.PNG')">
-<img src="HANDS2/12.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/12.PNG')">
-<img src="HANDS2/13.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/13.PNG')">
-<img src="HANDS2/14.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/14.PNG')">
-<img src="HANDS2/15.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/15.PNG')">
-<img src="HANDS2/16.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/16.PNG')">
-<img src="HANDS2/17.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/17.PNG')">
-<img src="HANDS2/18.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/18.PNG')">
-<img src="HANDS2/19.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/19.PNG')">
-<img src="HANDS2/20.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/20.PNG')">
-<img src="HANDS2/21.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/21.PNG')">
-<img src="HANDS2/22.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/22.PNG')">
-<img src="HANDS2/23.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/23.PNG')">
-<img src="HANDS2/24.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/24.PNG')">
-<img src="HANDS2/25.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/25.PNG')">
-<img src="HANDS2/26.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/26.PNG')">
-<img src="HANDS2/27.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/27.PNG')">
-<img src="HANDS2/28.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/28.PNG')">
-<img src="HANDS2/29.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/29.PNG')">
-<img src="HANDS2/30.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/30.PNG')">
-<img src="HANDS2/31.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/31.PNG')">
-<img src="HANDS2/32.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/32.PNG')">
-<img src="HANDS2/33.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/33.PNG')">
-<img src="HANDS2/34.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/34.PNG')">
-<img src="HANDS2/35.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/35.PNG')">
-<img src="HANDS2/36.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/36.PNG')">
-<img src="HANDS2/37.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/37.PNG')">
-<img src="HANDS2/38.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/38.PNG')">
-<img src="HANDS2/39.PNG" alt="HAND" onclick="selectTrait('hand', 'HANDS2/39.PNG')">
+<img src="HANDS2/AAA.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/AA.PNG')">
+<img src="HANDS2/1.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/1.PNG')">
+<img src="HANDS2/2.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/2.PNG')">
+<img src="HANDS2/3.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/3.PNG')">
+<img src="HANDS2/4.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/4.PNG')">
+<img src="HANDS2/5.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/5.PNG')">
+<img src="HANDS2/6.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/6.PNG')">
+<img src="HANDS2/7.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/7.PNG')">
+<img src="HANDS2/8.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/8.PNG')">
+<img src="HANDS2/9.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/9.PNG')">
+<img src="HANDS2/10.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/10.PNG')">
+<img src="HANDS2/11.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/11.PNG')">
+<img src="HANDS2/12.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/12.PNG')">
+<img src="HANDS2/13.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/13.PNG')">
+<img src="HANDS2/14.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/14.PNG')">
+<img src="HANDS2/15.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/15.PNG')">
+<img src="HANDS2/16.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/16.PNG')">
+<img src="HANDS2/17.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/17.PNG')">
+<img src="HANDS2/18.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/18.PNG')">
+<img src="HANDS2/19.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/19.PNG')">
+<img src="HANDS2/20.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/20.PNG')">
+<img src="HANDS2/21.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/21.PNG')">
+<img src="HANDS2/22.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/22.PNG')">
+<img src="HANDS2/23.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/23.PNG')">
+<img src="HANDS2/24.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/24.PNG')">
+<img src="HANDS2/25.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/25.PNG')">
+<img src="HANDS2/26.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/26.PNG')">
+<img src="HANDS2/27.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/27.PNG')">
+<img src="HANDS2/28.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/28.PNG')">
+<img src="HANDS2/29.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/29.PNG')">
+<img src="HANDS2/30.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/30.PNG')">
+<img src="HANDS2/31.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/31.PNG')">
+<img src="HANDS2/32.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/32.PNG')">
+<img src="HANDS2/33.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/33.PNG')">
+<img src="HANDS2/34.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/34.PNG')">
+<img src="HANDS2/35.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/35.PNG')">
+<img src="HANDS2/36.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/36.PNG')">
+<img src="HANDS2/37.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/37.PNG')">
+<img src="HANDS2/38.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/38.PNG')">
+<img src="HANDS2/39.PNG" alt="HAND" onclick="selectTrait('hand2', 'HANDS2/39.PNG')">
 
 
 
@@ -1181,22 +1549,369 @@ button:hover {
             </div>
         </div>
     </div>
+    </div>
+</div>
+
+<div id="loadModal" class="load-modal" aria-hidden="true">
+  <div class="load-modal-dialog">
+    <h4>LOAD A SAVED CHARACTER</h4>
+    <select id="loadModalSelect"></select>
+    <div class="modal-buttons">
+      <button type="button" id="loadModalCancel">CANCEL</button>
+      <button type="button" id="loadModalLoad">LOAD</button>
+    </div>
+  </div>
 </div>
 <script>
 /* =========================
    TRAIT SELECTOR + RANDOMIZER
    ========================= */
 function selectTrait(category, filename) {
-  const el = document.getElementById(category);
+  var el = document.getElementById(category);
   if (!el) return;
   el.src = filename || '';
+  if (typeof updateOnCharacterList === 'function') updateOnCharacterList();
 }
 
 function showCategory(categoryId) {
-  document.querySelectorAll('.trait-category').forEach(c => c.classList.remove('active'));
-  const el = document.getElementById(categoryId);
+  document.querySelectorAll('.trait-category').forEach(function (c) { c.classList.remove('active'); });
+  var el = document.getElementById(categoryId);
   if (el) el.classList.add('active');
   document.getElementById('traitPictures').style.display = 'flex';
+  document.querySelectorAll('.category-button[data-category-id]').forEach(function (btn) {
+    btn.classList.toggle('active-tab', btn.getAttribute('data-category-id') === categoryId);
+  });
+}
+
+/* =========================
+   TRAIT CULLING (selected = in randomizer)
+   ========================= */
+var TRAIT_DATA = {}; // slot -> array of { id, name, category, selected, image }
+
+var categoryIdToSlot = {
+  backgroundCategory: 'background',
+  backgroundblurCategory: 'backgroundblur',
+  skinCategory: 'skin',
+  eyesCategory: 'eyes',
+  mouthCategory: 'mouth',
+  hairCategory: 'hair',
+  clothingCategory: 'clothing',
+  accessoriesCategory: 'accessories',
+  behindbackCategory: 'behindback',
+  hatCategory: 'hat',
+  gooCategory: 'goo',
+  handCategory: 'hand',
+  hand2Category: 'hand2',
+  ballCategory: 'ball',
+  ball2Category: 'ball2'
+};
+
+var categoryDisplayNames = {
+  backgroundCategory: 'Backgrounds',
+  backgroundblurCategory: 'Background Blur',
+  skinCategory: 'Skin Tone',
+  eyesCategory: 'Eyes',
+  mouthCategory: 'Mouth',
+  hairCategory: 'Hairstyles',
+  clothingCategory: 'Clothing',
+  accessoriesCategory: 'Sunglasses',
+  behindbackCategory: 'Behind Back',
+  hatCategory: 'Headwear',
+  gooCategory: 'Above Head',
+  handCategory: 'Hand Gestures 1',
+  hand2Category: 'Hand Gestures 2',
+  ballCategory: 'Balls 1',
+  ball2Category: 'Balls 2'
+};
+
+var slotToDisplayName = {
+  background: 'Backgrounds',
+  backgroundblur: 'Background Blur',
+  behindback: 'Behind Back',
+  skin: 'Skin Tone',
+  eyes: 'Eyes',
+  clothing: 'Clothing',
+  mouth: 'Mouth',
+  hair: 'Hairstyles',
+  accessories: 'Sunglasses',
+  hat: 'Headwear',
+  goo: 'Above Head',
+  ball: 'Balls 1',
+  hand: 'Hand Gestures 1',
+  ball2: 'Balls 2',
+  hand2: 'Hand Gestures 2'
+};
+
+var slotToCategoryId = {};
+Object.keys(categoryIdToSlot).forEach(function (catId) {
+  slotToCategoryId[categoryIdToSlot[catId]] = catId;
+});
+
+function normalizeTraitPath(path) {
+  if (!path) return '';
+  var s = path.replace(/\\/g, '/');
+  var parts = s.split('/').filter(function (p) { return p; });
+  if (parts.length >= 2) return (parts[parts.length - 2] + '/' + parts[parts.length - 1]).toUpperCase();
+  if (parts.length === 1) return parts[0].toUpperCase();
+  return s.toUpperCase();
+}
+
+function findAndHighlightTrait(slot, imagePath) {
+  var categoryId = slotToCategoryId[slot];
+  if (!categoryId) return;
+  showCategory(categoryId);
+  var wantPath = normalizeTraitPath(imagePath);
+  var wantFile = wantPath.split('/').pop() || wantPath;
+  setTimeout(function () {
+    var cat = document.getElementById(categoryId);
+    if (!cat) return;
+    var wraps = cat.querySelectorAll('.trait-thumb-wrap');
+    var found = null;
+    wraps.forEach(function (wrap) {
+      var img = wrap.querySelector('img');
+      if (!img || !img.dataset.src) return;
+      var traitPath = normalizeTraitPath(img.dataset.src);
+      var traitFile = traitPath.split('/').pop() || traitPath;
+      var match = (traitPath === wantPath) || (traitPath.endsWith(wantPath)) || (wantPath.endsWith(traitPath)) || (traitFile === wantFile);
+      if (match) found = wrap;
+    });
+    if (found) {
+      found.classList.add('highlight-trait');
+      found.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function () {
+        found.classList.remove('highlight-trait');
+      }, 1000);
+    }
+  }, 150);
+}
+
+function getTraitPathFromDisplayImg(img) {
+  var src = img.src || '';
+  if (!src || src === window.location.href) return '';
+  try {
+    if (src.indexOf('http') === 0 || src.indexOf('file') === 0) {
+      var url = new URL(src);
+      var pathParts = url.pathname.split('/').filter(function (p) { return p; });
+      if (pathParts.length >= 2) return pathParts[pathParts.length - 2] + '/' + pathParts[pathParts.length - 1];
+      if (pathParts.length === 1) return pathParts[0];
+    }
+    var idx = src.lastIndexOf('/');
+    if (idx >= 0) return src.slice(idx + 1);
+    return src;
+  } catch (err) {
+    return src.split('/').slice(-2).join('/') || src;
+  }
+}
+
+var displaySlotOrder = ['background', 'backgroundblur', 'behindback', 'skin', 'eyes', 'clothing', 'mouth', 'hair', 'accessories', 'hat', 'goo', 'ball', 'hand', 'ball2', 'hand2'];
+
+function updateOnCharacterList() {
+  var container = document.getElementById('onCharacterListItems');
+  if (!container) return;
+  var stage = document.getElementById('characterDisplay');
+  if (!stage) return;
+  container.innerHTML = '';
+  displaySlotOrder.forEach(function (slot) {
+    var img = document.getElementById(slot);
+    var path = img ? getTraitPathFromDisplayImg(img) : '';
+    var label = slotToDisplayName[slot] || slot;
+    var displayVal = path ? path.split('/').pop() : '—';
+    var li = document.createElement('li');
+    li.dataset.slot = slot;
+    li.dataset.path = path || '';
+    li.innerHTML = '<span class="trait-name">' + label + '</span><span class="trait-value" title="' + (path || '') + '">' + displayVal + '</span>';
+    li.addEventListener('click', function () {
+      if (li.dataset.path) findAndHighlightTrait(slot, li.dataset.path);
+      else {
+        var catId = slotToCategoryId[slot];
+        if (catId) showCategory(catId);
+      }
+    });
+    container.appendChild(li);
+  });
+}
+
+function initCharacterCanvasClicks() {
+  updateOnCharacterList();
+}
+
+function initTraitCulling() {
+  var re = /selectTrait\s*\(\s*'[^']*'\s*,\s*'([^']*)'\s*\)/;
+  document.querySelectorAll('.trait-category').forEach(function (catEl) {
+    var categoryId = catEl.id;
+    var slot = categoryIdToSlot[categoryId];
+    if (!slot) return;
+    var title = categoryDisplayNames[categoryId] || categoryId;
+    var header = document.createElement('div');
+    header.className = 'category-header';
+    header.innerHTML = '<span class="category-title">' + title + '</span>' +
+      '<span class="category-count"></span>' +
+      '<div class="select-all-btns">' +
+      '<button type="button" class="btn-select-all">SELECT ALL</button>' +
+      '<button type="button" class="btn-deselect-all">DESELECT ALL</button>' +
+      '</div>';
+    catEl.insertBefore(header, catEl.firstChild);
+
+    var opts = catEl.querySelector('.trait-options');
+    if (!opts) return;
+    var list = [];
+    var idx = 0;
+    var imgs = Array.from(opts.querySelectorAll('img'));
+    imgs.forEach(function (img) {
+      var onclick = img.getAttribute('onclick');
+      var path = '';
+      if (onclick) {
+        var m = onclick.match(re);
+        if (m) path = m[1];
+      }
+      if (!path) path = img.src ? img.src.split('/').slice(-2).join('/') : '';
+      var id = slot + '_' + (idx++);
+      var name = img.alt || id;
+      var t = { id: id, name: name, category: slot, selected: true, image: path };
+      list.push(t);
+      img.dataset.slot = slot;
+      img.dataset.src = path;
+      img.dataset.selected = 'true';
+      img.removeAttribute('onclick');
+
+      var wrap = document.createElement('div');
+      wrap.className = 'trait-thumb-wrap';
+      img.parentNode.insertBefore(wrap, img);
+      wrap.appendChild(img);
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.className = 'trait-checkbox';
+      cb.checked = true;
+      cb.title = 'Include in randomizer';
+      cb.addEventListener('click', function (e) { e.stopPropagation(); });
+      cb.addEventListener('change', function () {
+        var sel = cb.checked;
+        setTraitSelected(img, sel);
+        var tr = list.find(function (x) { return x.image === path; });
+        if (tr) tr.selected = sel;
+        updateCategoryCounter(categoryId);
+      });
+      wrap.appendChild(cb);
+    });
+    TRAIT_DATA[slot] = list;
+  });
+
+  updateAllCategoryCounters();
+
+  document.getElementById('traitPictures').addEventListener('click', function (e) {
+    var btn = e.target.closest('.btn-select-all');
+    if (btn) {
+      var cat = e.target.closest('.trait-category');
+      if (cat) selectAllCategory(cat.id);
+      return;
+    }
+    btn = e.target.closest('.btn-deselect-all');
+    if (btn) {
+      var cat = e.target.closest('.trait-category');
+      if (cat) deselectAllCategory(cat.id);
+      return;
+    }
+    if (e.target.closest('.trait-checkbox')) return;
+    var img = e.target.closest('.trait-options img');
+    if (img && img.dataset.slot) selectTrait(img.dataset.slot, img.dataset.src);
+  });
+}
+
+function toggleTrait(img) {
+  var selected = img.dataset.selected !== 'true';
+  setTraitSelected(img, selected);
+  var slot = img.dataset.slot;
+  var path = img.dataset.src;
+  var list = TRAIT_DATA[slot];
+  if (list) {
+    var t = list.find(function (x) { return x.image === path; });
+    if (t) t.selected = selected;
+  }
+  var cat = img.closest('.trait-category');
+  if (cat) updateCategoryCounter(cat.id);
+}
+
+function setTraitSelected(img, selected) {
+  img.dataset.selected = selected ? 'true' : 'false';
+  if (selected) img.classList.remove('trait-deselected');
+  else img.classList.add('trait-deselected');
+  var wrap = img.closest('.trait-thumb-wrap');
+  if (wrap) {
+    var cb = wrap.querySelector('.trait-checkbox');
+    if (cb) cb.checked = selected;
+  }
+}
+
+function updateCategoryCounter(categoryId) {
+  var slot = categoryIdToSlot[categoryId];
+  if (!slot) return;
+  var list = TRAIT_DATA[slot];
+  if (!list) return;
+  var n = list.filter(function (t) { return t.selected; }).length;
+  var total = list.length;
+  var cat = document.getElementById(categoryId);
+  if (cat) {
+    var span = cat.querySelector('.category-count');
+    if (span) span.textContent = '(' + n + ' selected / ' + total + ' total)';
+  }
+  updateTabCounts();
+}
+
+function updateTabCounts() {
+  var container = document.getElementById('traitSelection');
+  if (!container) return;
+  container.querySelectorAll('.category-button[data-category-id]').forEach(function (btn) {
+    var categoryId = btn.getAttribute('data-category-id');
+    var label = btn.getAttribute('data-label') || btn.textContent;
+    var slot = categoryIdToSlot[categoryId];
+    var n = 0;
+    if (slot && TRAIT_DATA[slot]) n = TRAIT_DATA[slot].filter(function (t) { return t.selected; }).length;
+    btn.textContent = label + ' (' + n + ')';
+  });
+}
+
+function updateAllCategoryCounters() {
+  Object.keys(categoryIdToSlot).forEach(updateCategoryCounter);
+}
+
+function selectAllCategory(categoryId) {
+  var slot = categoryIdToSlot[categoryId];
+  if (!slot) return;
+  var list = TRAIT_DATA[slot];
+  if (!list) return;
+  list.forEach(function (t) { t.selected = true; });
+  var cat = document.getElementById(categoryId);
+  if (cat) {
+    cat.querySelectorAll('.trait-options img').forEach(function (img) {
+      setTraitSelected(img, true);
+    });
+  }
+  updateCategoryCounter(categoryId);
+}
+
+function deselectAllCategory(categoryId) {
+  var slot = categoryIdToSlot[categoryId];
+  if (!slot) return;
+  var list = TRAIT_DATA[slot];
+  if (!list) return;
+  list.forEach(function (t) { t.selected = false; });
+  var cat = document.getElementById(categoryId);
+  if (cat) {
+    cat.querySelectorAll('.trait-options img').forEach(function (img) {
+      setTraitSelected(img, false);
+    });
+  }
+  updateCategoryCounter(categoryId);
+}
+
+function getSelectedTraits(slot) {
+  var list = TRAIT_DATA[slot];
+  return list ? list.filter(function (t) { return t.selected; }) : [];
+}
+
+function pickRandomFrom(list) {
+  if (!list || list.length === 0) return null;
+  return list[Math.floor(Math.random() * list.length)];
 }
 
 function getRandomIndex(max) {
@@ -1207,40 +1922,57 @@ function getImagePath(folder, index) {
 }
 
 function randomizeCharacter() {
-  // ---- BASE TRAITS ---- //
-  const backgroundIndex = getRandomIndex(102);
-  selectTrait('background', getImagePath('BACKGROUNDS', backgroundIndex));
+  // ---- BASE TRAITS (only from selected) ---- //
+  var bgList = getSelectedTraits('background');
+  if (bgList.length) selectTrait('background', pickRandomFrom(bgList).image);
+  else selectTrait('background', '');
 
-  // FIXED: folder name must match your thumbnails (no space)
-  const backgroundblurIndex = getRandomIndex(4);
-  selectTrait('backgroundblur', getImagePath('BACKGROUNDBLUR', backgroundblurIndex));
+  var bgBlurList = getSelectedTraits('backgroundblur');
+  if (bgBlurList.length) selectTrait('backgroundblur', pickRandomFrom(bgBlurList).image);
+  else selectTrait('backgroundblur', '');
 
-  const skinIndex = getRandomIndex(39);
-  selectTrait('skin', getImagePath('SKIN', skinIndex));
+  var skinList = getSelectedTraits('skin');
+  var skinTrait = pickRandomFrom(skinList);
+  var skinIndex = skinTrait ? parseInt((skinTrait.image.match(/(\d+)/) || [0, 0])[1], 10) : 0;
+  if (skinTrait) selectTrait('skin', skinTrait.image);
+  else selectTrait('skin', '');
 
-  const eyesIndex = getRandomIndex(32);
-  selectTrait('eyes', getImagePath('EYES', eyesIndex));
+  var eyesList = getSelectedTraits('eyes');
+  if (eyesList.length) selectTrait('eyes', pickRandomFrom(eyesList).image);
+  else selectTrait('eyes', '');
 
-  const mouthIndex = getRandomIndex(108);
-  selectTrait('mouth', getImagePath('MOUTH', mouthIndex));
+  var mouthList = getSelectedTraits('mouth');
+  if (mouthList.length) selectTrait('mouth', pickRandomFrom(mouthList).image);
+  else selectTrait('mouth', '');
 
-  const clothingIndex = getRandomIndex(141);
-  selectTrait('clothing', getImagePath('CLOTHING', clothingIndex));
+  var clothingList = getSelectedTraits('clothing');
+  if (clothingList.length) selectTrait('clothing', pickRandomFrom(clothingList).image);
+  else selectTrait('clothing', '');
 
-  // ---- HAIR / HAT ---- //
-  if (Math.random() < 0.5) {
-    selectTrait('hair', getImagePath('HAIR', getRandomIndex(82)));
+  // ---- HAIR / HAT (mutual exclusion) ---- //
+  var hairList = getSelectedTraits('hair');
+  var hatList = getSelectedTraits('hat');
+  if (Math.random() < 0.5 && hairList.length > 0) {
+    selectTrait('hair', pickRandomFrom(hairList).image);
+    selectTrait('hat', '');
+  } else if (hatList.length > 0) {
+    selectTrait('hat', pickRandomFrom(hatList).image);
+    selectTrait('hair', '');
+  } else if (hairList.length > 0) {
+    selectTrait('hair', pickRandomFrom(hairList).image);
     selectTrait('hat', '');
   } else {
-    // You list up to 124 hats in the picker; safe upper bound:
-    selectTrait('hat', getImagePath('HATS', getRandomIndex(125)));
     selectTrait('hair', '');
+    selectTrait('hat', '');
   }
 
   // ---- OPTIONAL TRAITS ---- //
-  selectTrait('accessories', Math.random() < 0.5 ? getImagePath('GLASSES', getRandomIndex(24)) : '');
-  selectTrait('behindback', Math.random() < 0.5 ? getImagePath('BEHINDBACK', getRandomIndex(4)) : '');
-  selectTrait('goo', Math.random() < 0.5 ? getImagePath('GOO', getRandomIndex(7)) : '');
+  var accList = getSelectedTraits('accessories');
+  selectTrait('accessories', (Math.random() < 0.5 && accList.length) ? pickRandomFrom(accList).image : '');
+  var behindList = getSelectedTraits('behindback');
+  selectTrait('behindback', (Math.random() < 0.5 && behindList.length) ? pickRandomFrom(behindList).image : '');
+  var gooList = getSelectedTraits('goo');
+  selectTrait('goo', (Math.random() < 0.5 && gooList.length) ? pickRandomFrom(gooList).image : '');
 
   // ---- CLEAR HANDS ---- //
   selectTrait('hand', '');
@@ -1248,15 +1980,304 @@ function randomizeCharacter() {
   selectTrait('ball', '');
   selectTrait('ball2', '');
 
-  // ---- DECIDE HAND COMBO ---- //
-  const handCombo = Math.floor(Math.random() * 3); // 0 = hand1, 1 = hand2, 2 = neither
-  if (handCombo === 0) {
-    selectTrait('hand', getImagePath('HANDS', skinIndex));
-    selectTrait('ball', getImagePath('HANDITEM', getRandomIndex(15)));
-  } else if (handCombo === 1) {
-    selectTrait('hand2', getImagePath('HANDS2', skinIndex));
-    selectTrait('ball2', getImagePath('HANDITEM2', getRandomIndex(19)));
+  // ---- HAND COMBO: only matching hand/hand2 for chosen skin index; hand always has a ball; never use blank (AA/AAA) ---- //
+  function isBlankHand(path) {
+    if (!path) return true;
+    var u = (path + '').toUpperCase();
+    return u.endsWith('/AA.PNG') || u.endsWith('/AAA.PNG');
   }
+  var handListRaw = getSelectedTraits('hand');
+  var hand2ListRaw = getSelectedTraits('hand2');
+  var handList = handListRaw.filter(function (t) { return !isBlankHand(t.image); });
+  var hand2List = hand2ListRaw.filter(function (t) { return !isBlankHand(t.image); });
+  var allHands = (TRAIT_DATA.hand || []).filter(function (t) { return !isBlankHand(t.image); });
+  var allHands2 = (TRAIT_DATA.hand2 || []).filter(function (t) { return !isBlankHand(t.image); });
+  var ballListRaw = getSelectedTraits('ball');
+  var ball2ListRaw = getSelectedTraits('ball2');
+  var ballList = ballListRaw.filter(function (t) { return !isBlankHand(t.image); });
+  var ball2List = ball2ListRaw.filter(function (t) { return !isBlankHand(t.image); });
+  var allBalls = (TRAIT_DATA.ball || []).filter(function (t) { return !isBlankHand(t.image); });
+  var allBalls2 = (TRAIT_DATA.ball2 || []).filter(function (t) { return !isBlankHand(t.image); });
+  // Hand 1 + Ball 1: same logic as before
+  var handCombo = Math.floor(Math.random() * 3);
+  if (handCombo === 0 && skinIndex && skinTrait) {
+    var handPool = handList.length > 0 ? handList : allHands;
+    var handTrait = handPool.find(function (t) {
+      var n = (t.image.match(/(\d+)/) || [])[1];
+      return n && parseInt(n, 10) === skinIndex;
+    });
+    if (handTrait) {
+      selectTrait('hand', handTrait.image);
+      var ballPool = ballList.length ? ballList : allBalls;
+      var ballTrait = pickRandomFrom(ballPool);
+      if (ballTrait) selectTrait('ball', ballTrait.image);
+    }
+  }
+  // Hand 2 + Ball 2: Match skin index like Hand 1 (HANDS2/3.PNG for skin 3, etc.)
+  if (handCombo === 1 && skinIndex && skinTrait) {
+    // Build hand2 pool - use selected first, then all, ensure we have something
+    var hand2Pool = hand2List.length > 0 ? hand2List : allHands2;
+    if (hand2Pool.length === 0) {
+      // Last resort: get ALL hand2 traits from TRAIT_DATA
+      var allHand2Raw = TRAIT_DATA.hand2 || [];
+      hand2Pool = allHand2Raw.filter(function (t) { return t && t.image && !isBlankHand(t.image); });
+    }
+    if (hand2Pool.length > 0) {
+      // Try to find hand2 trait matching skin index (same as Hand 1 logic)
+      var hand2Trait = hand2Pool.find(function (t) {
+        if (!t || !t.image) return false;
+        var n = (t.image.match(/(\d+)/) || [])[1];
+        return n && parseInt(n, 10) === skinIndex;
+      });
+      // If no exact match, use any hand2 trait as fallback
+      if (!hand2Trait) {
+        hand2Trait = pickRandomFrom(hand2Pool);
+      }
+      if (hand2Trait && hand2Trait.image) {
+        selectTrait('hand2', hand2Trait.image);
+        // Get ball2 pool
+        var ball2Pool = ball2List.length ? ball2List : allBalls2;
+        if (ball2Pool.length === 0) {
+          var allBall2Raw = TRAIT_DATA.ball2 || [];
+          ball2Pool = allBall2Raw.filter(function (t) { return t && t.image && !isBlankHand(t.image); });
+        }
+        if (ball2Pool.length > 0) {
+          var ball2Trait = pickRandomFrom(ball2Pool);
+          if (ball2Trait && ball2Trait.image) {
+            selectTrait('ball2', ball2Trait.image);
+          }
+        }
+      }
+    }
+  }
+  // handCombo === 2 means no hand (33% chance)
+}
+
+function exportTraitList() {
+  var slotOrder = ['background', 'backgroundblur', 'skin', 'eyes', 'mouth', 'hair', 'clothing', 'accessories', 'behindback', 'hat', 'goo', 'hand', 'hand2', 'ball', 'ball2'];
+  var sections = [];
+  var dateStr = new Date().toLocaleDateString(undefined, { dateStyle: 'medium' });
+
+  sections.push('');
+  sections.push('  ★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★');
+  sections.push('');
+  sections.push('         🎨  L I T T L E   O L L I E  🎨');
+  sections.push('              Character Creator');
+  sections.push('');
+  sections.push('         My Selected Traits List!');
+  sections.push('         (these are in my randomizer)');
+  sections.push('');
+  sections.push('  ★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★');
+  sections.push('         Saved on: ' + dateStr);
+  sections.push('  ★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★');
+  sections.push('');
+
+  slotOrder.forEach(function (slot) {
+    var list = TRAIT_DATA[slot];
+    if (!list) return;
+    var selected = list.filter(function (t) { return t.selected; });
+    if (selected.length === 0) return;
+    var categoryName = slotToDisplayName[slot] || slot;
+    var filenames = selected.map(function (t) {
+      var path = t.image || '';
+      return path.split('/').pop() || path.split('\\').pop() || path || t.name;
+    });
+    sections.push('  ─── ' + categoryName + ' ───');
+    sections.push('     (' + selected.length + ' selected)');
+    sections.push('');
+    var chunk = 8;
+    for (var i = 0; i < filenames.length; i += chunk) {
+      sections.push('     ' + filenames.slice(i, i + chunk).join(', '));
+    }
+    sections.push('');
+  });
+
+  if (sections.length <= 10) {
+    sections.push('     No traits selected yet — check some boxes and try again!');
+    sections.push('');
+  }
+  var text = sections.join('\n');
+  var blob = new Blob([text], { type: 'text/plain' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.download = 'selected-traits.txt';
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('exportTraitListBtn').addEventListener('click', exportTraitList);
+
+var SAVES_KEY = 'littleOllieSaves';
+var OLD_SAVE_KEY = 'littleOllieSaved';
+
+function getAllSaves() {
+  try {
+    var raw = localStorage.getItem(SAVES_KEY);
+    var saves = raw ? JSON.parse(raw) : {};
+    var oldRaw = localStorage.getItem(OLD_SAVE_KEY);
+    if (oldRaw && Object.keys(saves).length === 0) {
+      try {
+        saves['Previous save'] = JSON.parse(oldRaw);
+        localStorage.setItem(SAVES_KEY, JSON.stringify(saves));
+        localStorage.removeItem(OLD_SAVE_KEY);
+      } catch (e) {}
+    }
+    return saves;
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveCharacterToStorage() {
+  var name = typeof prompt === 'function' ? prompt('Name this save:', '') : '';
+  if (name == null) return;
+  name = (name || '').trim();
+  if (!name) name = 'Unnamed ' + new Date().toLocaleDateString();
+  var character = {};
+  displaySlotOrder.forEach(function (slot) {
+    var img = document.getElementById(slot);
+    var path = img ? getTraitPathFromDisplayImg(img) : '';
+    character[slot] = path || '';
+  });
+  var selections = {};
+  Object.keys(TRAIT_DATA).forEach(function (slot) {
+    var list = TRAIT_DATA[slot];
+    if (!list) return;
+    selections[slot] = list.filter(function (t) { return t.selected; }).map(function (t) { return t.image; });
+  });
+  try {
+    var saves = getAllSaves();
+    saves[name] = { character: character, selections: selections };
+    localStorage.setItem(SAVES_KEY, JSON.stringify(saves));
+    if (typeof alert === 'function') alert('Saved as "' + name + '". Load it anytime from Load.');
+  } catch (e) {
+    if (typeof alert === 'function') alert('Could not save: ' + e.message);
+  }
+}
+
+function applyLoadedData(data) {
+  var character = data.character || {};
+  displaySlotOrder.forEach(function (slot) {
+    selectTrait(slot, character[slot] || '');
+  });
+  var selections = data.selections || {};
+  Object.keys(TRAIT_DATA).forEach(function (slot) {
+    var selectedPaths = selections[slot];
+    if (!Array.isArray(selectedPaths)) return;
+    var list = TRAIT_DATA[slot];
+    if (!list) return;
+    list.forEach(function (t) {
+      t.selected = selectedPaths.indexOf(t.image) !== -1;
+    });
+    var catId = slotToCategoryId[slot];
+    if (!catId) return;
+    var cat = document.getElementById(catId);
+    if (cat) {
+      cat.querySelectorAll('.trait-thumb-wrap').forEach(function (wrap) {
+        var img = wrap.querySelector('img');
+        if (!img || !img.dataset.src) return;
+        var sel = selectedPaths.indexOf(img.dataset.src) !== -1;
+        setTraitSelected(img, sel);
+        var cb = wrap.querySelector('.trait-checkbox');
+        if (cb) cb.checked = sel;
+      });
+    }
+  });
+  updateAllCategoryCounters();
+  updateTabCounts();
+  if (typeof updateOnCharacterList === 'function') updateOnCharacterList();
+}
+
+function loadCharacterFromStorage() {
+  var saves = getAllSaves();
+  var names = Object.keys(saves);
+  if (names.length === 0) {
+    if (typeof alert === 'function') alert('No saved characters. Save one first!');
+    return;
+  }
+  var modal = document.getElementById('loadModal');
+  var select = document.getElementById('loadModalSelect');
+  if (!modal || !select) return;
+  select.innerHTML = '';
+  names.forEach(function (n) {
+    var opt = document.createElement('option');
+    opt.value = n;
+    opt.textContent = n;
+    select.appendChild(opt);
+  });
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeLoadModal() {
+  var modal = document.getElementById('loadModal');
+  if (modal) {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+}
+
+function doLoadSelected() {
+  var select = document.getElementById('loadModalSelect');
+  var saves = getAllSaves();
+  var name = select && select.value;
+  if (!name || !saves[name]) return;
+  try {
+    applyLoadedData(saves[name]);
+    closeLoadModal();
+    if (typeof alert === 'function') alert('Loaded "' + name + '"!');
+  } catch (e) {
+    if (typeof alert === 'function') alert('Could not load: ' + e.message);
+  }
+}
+
+document.getElementById('loadModalCancel').addEventListener('click', closeLoadModal);
+document.getElementById('loadModalLoad').addEventListener('click', doLoadSelected);
+document.getElementById('loadModal').addEventListener('click', function (e) {
+  if (e.target === this) closeLoadModal();
+});
+
+function newCharacter() {
+  displaySlotOrder.forEach(function (slot) {
+    selectTrait(slot, '');
+  });
+  Object.keys(TRAIT_DATA).forEach(function (slot) {
+    var list = TRAIT_DATA[slot];
+    if (!list) return;
+    list.forEach(function (t) { t.selected = true; });
+    var catId = slotToCategoryId[slot];
+    if (!catId) return;
+    var cat = document.getElementById(catId);
+    if (cat) {
+      cat.querySelectorAll('.trait-thumb-wrap').forEach(function (wrap) {
+        var img = wrap.querySelector('img');
+        if (img) setTraitSelected(img, true);
+        var cb = wrap.querySelector('.trait-checkbox');
+        if (cb) cb.checked = true;
+      });
+    }
+  });
+  updateAllCategoryCounters();
+  updateTabCounts();
+  if (typeof updateOnCharacterList === 'function') updateOnCharacterList();
+  if (typeof alert === 'function') alert('New character started. All traits are selected for randomizer.');
+}
+
+document.getElementById('saveCharacterBtn').addEventListener('click', saveCharacterToStorage);
+document.getElementById('loadCharacterBtn').addEventListener('click', loadCharacterFromStorage);
+document.getElementById('newCharacterBtn').addEventListener('click', newCharacter);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function () {
+    initTraitCulling();
+    initCharacterCanvasClicks();
+  });
+} else {
+  initTraitCulling();
+  initCharacterCanvasClicks();
 }
 
 /* =========================
