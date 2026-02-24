@@ -798,6 +798,7 @@ button:hover {
                 <button id="saveCharacterBtn">SAVE</button>
                 <button id="loadCharacterBtn">LOAD</button>
                 <button id="newCharacterBtn">NEW</button>
+                <button id="exportImageBtn">EXPORT IMAGE</button>
             </div>
         </div>
     </div>
@@ -2809,8 +2810,9 @@ if (document.readyState === 'loading') {
   const stage = document.getElementById('characterDisplay');
   const btnColor = document.getElementById('downloadColor');
   const btnBW    = document.getElementById('downloadBW');
+  const btnExportImage = document.getElementById('exportImageBtn');
 
-  if (!stage || !btnColor || !btnBW) return; // in case HTML not present yet
+  if (!stage) return; // in case HTML not present yet
 
   function getLayers() {
     // Use DOM order = stacking order
@@ -2899,23 +2901,37 @@ return canvas;
 
   }
 
-  function downloadCanvas(canvas, filename) {
+  function downloadCanvas(canvas, filename, mimeType, quality) {
     const a = document.createElement('a');
     a.download = filename;
-    a.href = canvas.toDataURL('image/png');
+    if (mimeType === 'image/jpeg' && quality != null) {
+      a.href = canvas.toDataURL('image/jpeg', quality);
+    } else {
+      a.href = canvas.toDataURL('image/png');
+    }
     document.body.appendChild(a);
     a.click();
     a.remove();
   }
 
-  btnColor.addEventListener('click', () => {
-    const c = renderComposite(false);
-    downloadCanvas(c, 'LittleOllie_Colour.png');
-  });
-  btnBW.addEventListener('click', () => {
-    const c = renderComposite(true);
-    downloadCanvas(c, 'LittleOllie_ColouringPage.png');
-  });
+  if (btnColor) {
+    btnColor.addEventListener('click', () => {
+      const c = renderComposite(false);
+      downloadCanvas(c, 'LittleOllie_Colour.png');
+    });
+  }
+  if (btnBW) {
+    btnBW.addEventListener('click', () => {
+      const c = renderComposite(true);
+      downloadCanvas(c, 'LittleOllie_ColouringPage.png');
+    });
+  }
+  if (btnExportImage) {
+    btnExportImage.addEventListener('click', () => {
+      const c = renderComposite(false);
+      downloadCanvas(c, 'LittleOllie_Export.jpg', 'image/jpeg', 0.92);
+    });
+  }
 })();
 </script>
 
